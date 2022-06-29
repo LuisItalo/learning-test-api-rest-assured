@@ -58,7 +58,39 @@ public class Pet {
                 .path("category.name")
         ;
         System.out.println("o token é "+ token);
-
     }
+    @Test(priority = 2)
+    public void alterarPet() throws IOException {
+        String jsonBody = lerJson("src/test/resources/jsons/pet2.json");
 
+        given()
+                .contentType("application/json")
+                .log().all()
+                .body(jsonBody)
+        .when()
+                .put(uri) //altera
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("name", is("ralf"))
+                .body("status", is("vendido"))
+                ;
+    }
+    @Test(priority = 3)
+    public void excluirPet(){
+        String petId = "202220061991";
+
+        given()
+                .contentType("application/jason")
+                .log().all()
+        .when()
+                .delete(uri + "/" + petId)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("code", is(200))
+                .body("type", is("unknown"))
+                .body("message", is(petId))
+                ;
+    }
 }

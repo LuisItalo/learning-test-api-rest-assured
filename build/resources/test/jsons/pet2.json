@@ -1,0 +1,18 @@
+{
+  "id": 202220061991,
+  "category": {
+    "id": 1,
+    "name": "LI1232DUDA"
+  },
+  "name": "ralf",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 20222006,
+      "name": "data"
+    }
+  ],
+  "status": "vendido"
+}
