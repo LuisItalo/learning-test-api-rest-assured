@@ -17,7 +17,7 @@ public class Pet {
     public String lerJson (String caminhoJson) throws IOException {
         return new String(Files.readAllBytes(Paths.get(caminhoJson)));
     }
-    @Test //identifica metodo
+    @Test(priority = 0) //identifica metodo
     public void incluirPet() throws IOException {
         String jsonBody = lerJson("src/test/resources/jsons/pet1.json");
 
@@ -27,14 +27,38 @@ public class Pet {
                 .log().all()
                 .body(jsonBody)
         .when()
-                .post(uri)
+                .post(uri) //inclui animal
         .then()
                 .log().all()
                 .statusCode(200)
                 .body("name", is("ralf"))  //check nome do chachorro
                 .body("status", is("available")) //check status
-                .body("category.name", is("dog"))
-                .body("tags.name", contains("sta"))
+                .body("category.name", is("LI1232DUDA"))
+                .body("tags.name", contains("data"))
         ;
     }
+    @Test(priority = 1)
+    public void consultarPet(){
+
+        String petId = "202220061991";
+
+        String token =
+        given()
+                .contentType("application/jason")
+                .log().all()
+        .when()
+                .get(uri + "/" + petId) //consulta animal
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("name", is("ralf"))
+                .body("category.name", is("LI1232DUDA"))
+                .body("status", is("available"))
+        .extract()
+                .path("category.name")
+        ;
+        System.out.println("o token é "+ token);
+
+    }
+
 }
